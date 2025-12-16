@@ -5,36 +5,47 @@ using static UnityEditor.PlayerSettings.SplashScreen;
 public class character_movement : MonoBehaviour
 {
     [SerializeField] public float movementSpeed = 6f;
-    [SerializeField] public float jumpSpeed = 5f;
-    [SerializeField] private float gravity = -9.8f;
-    [SerializeField] InputActionReference move;
-    [SerializeField] InputActionReference jump;
-    [SerializeField] InputActionReference sprint;
-
+    [SerializeField] public float jumpHeight = 1.5f;
+    [SerializeField] private float gravity = -25f;
+    CharacterController player;
+  
     Vector2 rawMove = Vector2.zero;
-
     float verticalVelocity = 0f;
-    bool isGrounded = true;
-    private void Update()
+    
+    private void Awake()
     {
-        if (!isGrounded)
+        player = GetComponent<CharacterController>();
+    }
+    void Update()
+    {
+        Vector3 movement = new Vector3(rawMove.x, 0f, rawMove.y) * movementSpeed;
+        
+
+        if (player.isGrounded && verticalVelocity < 0)
         {
-            verticalVelocity = jumpSpeed += gravity * Time.deltaTime;
+           verticalVelocity = -2f;
         }
-        Vector3 moveToApply = new Vector3(rawMove.x, 0f, rawMove.y) * movementSpeed * Time.deltaTime;
-        transform.Translate(moveToApply);
+        if (verticalVelocity < 0)
+            verticalVelocity += gravity * Time.deltaTime; 
+        else
+            verticalVelocity += gravity * Time.deltaTime;
+
+        verticalVelocity += gravity * Time.deltaTime;
+        movement.y = verticalVelocity;
+
+        player.Move(movement * Time.deltaTime);
     }
 
     void OnMove(InputValue value)
     {
         rawMove = value.Get<Vector2>();
-        //Debug.Log(rawMove);
-
+      
     }
     void OnJump()
     {
-        isGrounded = true;
-        //Debug.Log("DoJUMP!");
+        if (player.isGrounded) {
+            verticalVelocity = Mathf.Sqrt(jumpHeight * -2 * gravity);
+            
 
-    }
+        } }
 }
