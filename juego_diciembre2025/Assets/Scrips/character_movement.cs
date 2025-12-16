@@ -1,34 +1,40 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using static UnityEditor.PlayerSettings.SplashScreen;
 
 public class character_movement : MonoBehaviour
 {
     [SerializeField] public float movementSpeed = 6f;
-    [SerializeField] public float jumpForce = 5f;
+    [SerializeField] public float jumpSpeed = 5f;
     [SerializeField] private float gravity = -9.8f;
-  
-    private CharacterController player;
-    private Vector3 velocity;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] InputActionReference move;
+    [SerializeField] InputActionReference jump;
+    [SerializeField] InputActionReference sprint;
+
+    Vector2 rawMove = Vector2.zero;
+
+    float verticalVelocity = 0f;
+    bool isGrounded = true;
+    private void Update()
     {
-        player = GetComponent<CharacterController>();
+        if (!isGrounded)
+        {
+            verticalVelocity = jumpSpeed += gravity * Time.deltaTime;
+        }
+        Vector3 moveToApply = new Vector3(rawMove.x, 0f, rawMove.y) * movementSpeed * Time.deltaTime;
+        transform.Translate(moveToApply);
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnMove(InputValue value)
     {
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-        Vector3 move = transform.right * x + transform.forward * z;
-        player.Move(move * movementSpeed * Time.deltaTime);
-      
-        if (player.isGrounded && velocity.y < 0)
-        { velocity.y = -2f; }
+        rawMove = value.Get<Vector2>();
+        //Debug.Log(rawMove);
 
-        if (Input.GetKeyDown(KeyCode.Space) && player.isGrounded)
-            { velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity); }
+    }
+    void OnJump()
+    {
+        isGrounded = true;
+        //Debug.Log("DoJUMP!");
 
-        velocity.y += gravity * Time.deltaTime;
-        player.Move(velocity * Time.deltaTime);
     }
 }

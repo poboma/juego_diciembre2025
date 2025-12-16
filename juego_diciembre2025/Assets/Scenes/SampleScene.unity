@@ -538,6 +538,20 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 174fe0ee833a2ac4e935cb11a5546f48, type: 3}
+--- !u!114 &1066726451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: PlayerInputs/Move
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: a29639998fc1b9e40ad2c2b20452aa7d, type: 3}
+  m_ActionId: d9dc5cb1-d537-4684-9e64-730cdf4c2e04
 --- !u!1001 &1127927205
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -603,6 +617,20 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 174fe0ee833a2ac4e935cb11a5546f48, type: 3}
+--- !u!114 &1200647140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: PlayerInputs/Sprint
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: a29639998fc1b9e40ad2c2b20452aa7d, type: 3}
+  m_ActionId: 9e14f200-b03d-4551-a058-9eacc2138903
 --- !u!1001 &1262802320
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -687,6 +715,7 @@ GameObject:
   - component: {fileID: 1855051407}
   - component: {fileID: 1855051406}
   - component: {fileID: 1855051405}
+  - component: {fileID: 1855051411}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -718,7 +747,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1855051406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -732,8 +761,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::character_movement
   movementSpeed: 6
-  jumpForce: 5
+  jumpSpeed: 5
   gravity: -9.8
+  move: {fileID: 1066726451}
+  jump: {fileID: 2015609854}
+  sprint: {fileID: 1200647140}
 --- !u!136 &1855051407
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -822,13 +854,43 @@ Transform:
   m_GameObject: {fileID: 1855051404}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.64617, y: 1.5, z: 7.811}
+  m_LocalPosition: {x: 4.64617, y: 0.5, z: 7.811}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 330585546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1855051411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1855051404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
+  m_Actions: {fileID: -944628639613478452, guid: a29639998fc1b9e40ad2c2b20452aa7d, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: PlayerInputs
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!4 &1957581146 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4634296565035258567, guid: 174fe0ee833a2ac4e935cb11a5546f48, type: 3}
@@ -945,6 +1007,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2015609854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: PlayerInputs/Jump
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: a29639998fc1b9e40ad2c2b20452aa7d, type: 3}
+  m_ActionId: 8e6dc38c-e536-48a0-986c-2b2f4c52b6da
 --- !u!1001 &3726016599834840524
 PrefabInstance:
   m_ObjectHideFlags: 0
